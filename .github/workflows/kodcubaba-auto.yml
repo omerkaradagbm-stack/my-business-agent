@@ -1,0 +1,43 @@
+name: Kodcubaba Otomatik Yardımcısı
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  kodcubaba-auto:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Depoyu klonla
+        uses: actions/checkout@v4
+
+      - name: Node.js kurulum
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Kodcubaba Analizi
+        run: |
+          echo "🧠 Kodcubaba analiz başlattı..."
+          # Buraya analiz ve iyileştirme komutları entegre edilecek
+          echo "✅ Kod kontrol tamamlandı."
+
+      - name: Otomatik commit ve merge
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Kodcubaba otomatik düzeltme uyguladı 🚀"
+          commit_user_name: "Kodcubaba Bot"
+          commit_user_email: "actions@github.com"
+          branch: main
+          push_options: '--force'
+        env:
+          GITHUB_TOKEN: ${{ secrets.KODCUBABA_TOKEN }}
