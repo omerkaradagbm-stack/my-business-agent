@@ -1,0 +1,42 @@
+name: Kodcubaba AI Yardımcısı
+
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  kodcubaba-ai:
+    runs-on: ubuntu-latest
+    if: contains(github.event.comment.body, '/kodcubaba')
+    steps:
+      - name: Depoyu Klonla
+        uses: actions/checkout@v4
+
+      - name: Node Kurulumu
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Kod Analizi
+        run: |
+          echo "Kodcubaba analiz yapıyor..."
+          # Burada benim analiz scriptlerim çalışır
+          # İleride bu adım sana özel olarak özelleştirilebilir
+
+      - name: PR Önerisi Oluştur
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Kodcubaba önerisi: otomatik düzeltme"
+          title: "Kodcubaba Otomatik Düzeltme Önerisi"
+          body: |
+            👋 Merhaba patron!
+            Kodcubaba sisteminde bazı iyileştirmeler tespit etti.
+            Lütfen değişiklikleri incele, uygunsa birleştir.
+          branch: kodcubaba-ai-suggestions
+          delete-branch: true
