@@ -1,19 +1,13 @@
-{
-"name": "my-business-agent-frontend",
-"version": "1.0.0",
-"private": true,
-"scripts": {
-"dev": "vite",
-"build": "vite build",
-"preview": "vite preview"
-},
-"dependencies": {
-"axios": "^1.7.7",
-"react": "^18.2.0",
-"react-dom": "^18.2.0"
-},
-"devDependencies": {
-"@vitejs/plugin-react": "^4.3.1",
-"vite": "^5.4.8"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+
+export default defineConfig({
+plugins: [react()],
+server: {
+port: 5173,
+proxy: {
+'/api': 'http://localhost:4000'
 }
 }
+});
