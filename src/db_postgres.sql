@@ -1,0 +1,9 @@
+-- PostgreSQL tablo şeması
+CREATE TABLE IF NOT EXISTS customers (
+id SERIAL PRIMARY KEY,
+name VARCHAR(120) NOT NULL,
+email VARCHAR(180) NOT NULL UNIQUE,
+phone VARCHAR(40),
+company VARCHAR(180),
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
